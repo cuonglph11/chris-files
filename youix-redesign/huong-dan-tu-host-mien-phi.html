@@ -1,0 +1,391 @@
+<title>Hướng dẫn tự chuyển website sang host miễn phí — youix.edu.vn</title>
+<style>
+:root{
+  --paper:#F5F6F4;
+  --surface:#FFFFFF;
+  --surface-2:#EBEEEA;
+  --ink:#161A17;
+  --ink-soft:#4B534E;
+  --ink-faint:#828B84;
+  --line:rgba(20,28,22,.13);
+  --accent:#0C6E58;
+  --accent-ink:#0A5847;
+  --accent-soft:#E1F1EB;
+  --warn:#9A4A0A;
+  --warn-soft:#FBEEE1;
+  --warn-line:rgba(154,74,10,.28);
+  --shadow:0 10px 34px -16px rgba(15,25,20,.22);
+  --code-bg:#101512;
+  --code-ink:#DCEAE3;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#0E1210;
+    --surface:#171C19;
+    --surface-2:#212722;
+    --ink:#EBEFEC;
+    --ink-soft:#AEB8B1;
+    --ink-faint:#77827B;
+    --line:rgba(220,230,224,.14);
+    --accent:#3FBF97;
+    --accent-ink:#63D4AE;
+    --accent-soft:#16332A;
+    --warn:#E3A15C;
+    --warn-soft:#3A2A18;
+    --warn-line:rgba(227,161,92,.32);
+    --shadow:0 10px 34px -16px rgba(0,0,0,.6);
+    --code-bg:#0B0F0D;
+    --code-ink:#CFE6DA;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0E1210; --surface:#171C19; --surface-2:#212722;
+  --ink:#EBEFEC; --ink-soft:#AEB8B1; --ink-faint:#77827B;
+  --line:rgba(220,230,224,.14); --accent:#3FBF97; --accent-ink:#63D4AE;
+  --accent-soft:#16332A; --warn:#E3A15C; --warn-soft:#3A2A18;
+  --warn-line:rgba(227,161,92,.32); --shadow:0 10px 34px -16px rgba(0,0,0,.6);
+  --code-bg:#0B0F0D; --code-ink:#CFE6DA;
+}
+:root[data-theme="light"]{
+  --paper:#F5F6F4; --surface:#FFFFFF; --surface-2:#EBEEEA;
+  --ink:#161A17; --ink-soft:#4B534E; --ink-faint:#828B84;
+  --line:rgba(20,28,22,.13); --accent:#0C6E58; --accent-ink:#0A5847;
+  --accent-soft:#E1F1EB; --warn:#9A4A0A; --warn-soft:#FBEEE1;
+  --warn-line:rgba(154,74,10,.28); --shadow:0 10px 34px -16px rgba(15,25,20,.22);
+  --code-bg:#101512; --code-ink:#DCEAE3;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{line-height:1.22;text-wrap:balance;margin:0 0 .4em;font-weight:800;letter-spacing:-.01em}
+p{margin:0 0 1em}
+a{color:var(--accent-ink)}
+a:focus-visible,summary:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:4px}
+.wrap{max-width:760px;margin:0 auto;padding:0 22px}
+code{background:var(--surface-2);padding:.15em .45em;border-radius:5px;font-size:.92em;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+
+/* ===== header ===== */
+header.top{padding:46px 0 22px;border-bottom:1px solid var(--line)}
+.badge{
+  display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;
+  letter-spacing:.06em;color:var(--accent-ink);background:var(--accent-soft);
+  padding:6px 13px;border-radius:999px;margin-bottom:16px;
+}
+h1{font-size:clamp(26px,4vw,34px)}
+.lede{color:var(--ink-soft);font-size:16.5px;max-width:56ch}
+.meta-row{display:flex;gap:18px;flex-wrap:wrap;margin-top:18px;font-size:13.5px;color:var(--ink-faint)}
+.meta-row span{display:inline-flex;align-items:center;gap:6px}
+
+/* ===== toc ===== */
+nav.toc{
+  margin:26px 0 0;padding:16px 18px;background:var(--surface);border:1px solid var(--line);
+  border-radius:14px;
+}
+nav.toc b{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-faint);margin-bottom:10px}
+nav.toc ol{margin:0;padding-left:20px;columns:2;gap:6px 24px;font-size:14.5px}
+nav.toc li{margin-bottom:6px;break-inside:avoid}
+nav.toc a{color:var(--ink);text-decoration:none}
+nav.toc a:hover{color:var(--accent-ink);text-decoration:underline}
+
+/* ===== sections ===== */
+main{padding:36px 0 20px}
+section{margin-bottom:34px;scroll-margin-top:20px}
+section > h2{font-size:19px;display:flex;align-items:center;gap:10px}
+
+/* ===== callouts ===== */
+.callout{
+  border-radius:14px;padding:20px 22px;margin:18px 0;border:1px solid var(--line);
+}
+.callout.warn{background:var(--warn-soft);border-color:var(--warn-line)}
+.callout.warn h3{color:var(--warn);font-size:15.5px;margin-bottom:8px;display:flex;gap:8px;align-items:center}
+.callout.info{background:var(--surface);}
+.callout.info h3{font-size:15px;margin-bottom:6px;color:var(--ink)}
+.callout p:last-child{margin-bottom:0}
+.callout ul{margin:.4em 0 0;padding-left:20px}
+.callout li{margin-bottom:4px}
+
+/* ===== prep checklist ===== */
+.prep{
+  display:flex;flex-direction:column;gap:10px;background:var(--surface);
+  border:1px solid var(--line);border-radius:14px;padding:20px 22px;
+}
+.prep-item{display:grid;grid-template-columns:22px 1fr;gap:12px;align-items:start;font-size:15px}
+.prep-item .ck{
+  width:20px;height:20px;border-radius:6px;border:1.6px solid var(--ink-faint);
+  margin-top:2px;flex:0 0 auto;
+}
+
+/* ===== step cards ===== */
+.step{
+  display:grid;grid-template-columns:44px 1fr;gap:16px;
+  background:var(--surface);border:1px solid var(--line);border-radius:16px;
+  padding:22px 22px 24px;margin-bottom:16px;box-shadow:var(--shadow);
+}
+.step .num{
+  width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;
+  display:grid;place-items:center;font-weight:800;font-size:17px;font-variant-numeric:tabular-nums;
+}
+.step h3{font-size:17.5px;margin-bottom:8px}
+.step p{color:var(--ink-soft);font-size:15px}
+.step ol,.step ul{padding-left:20px;color:var(--ink-soft);font-size:15px;margin:.5em 0 0}
+.step li{margin-bottom:7px}
+.step li::marker{color:var(--ink-faint)}
+.tip{
+  margin-top:12px;padding:12px 14px;border-radius:10px;background:var(--accent-soft);
+  font-size:13.8px;color:var(--accent-ink);display:flex;gap:9px;align-items:flex-start;
+}
+.tip b{color:var(--accent-ink)}
+.dns-table{
+  width:100%;border-collapse:collapse;margin-top:12px;font-size:13.8px;
+  background:var(--code-bg);color:var(--code-ink);border-radius:10px;overflow:hidden;
+}
+.dns-table th,.dns-table td{padding:9px 12px;text-align:left;border-bottom:1px solid rgba(255,255,255,.08)}
+.dns-table th{font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.05em;opacity:.75}
+.dns-table tr:last-child td{border-bottom:none}
+.dns-table td code{background:rgba(255,255,255,.08);color:inherit}
+
+/* ===== final checklist ===== */
+.final-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.final-list li{
+  display:flex;gap:10px;align-items:flex-start;font-size:15px;color:var(--ink-soft);
+  background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;
+}
+.final-list li::before{content:"✓";color:var(--accent);font-weight:800;flex:0 0 auto}
+
+/* ===== faq ===== */
+details{
+  background:var(--surface);border:1px solid var(--line);border-radius:12px;
+  margin-bottom:10px;padding:2px 0;
+}
+details summary{
+  cursor:pointer;list-style:none;padding:14px 18px;font-weight:700;font-size:15px;
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+}
+details summary::-webkit-details-marker{display:none}
+details summary::after{content:"+";color:var(--ink-faint);font-size:20px;font-weight:400;flex:0 0 auto}
+details[open] summary::after{content:"–"}
+details .a{padding:0 18px 16px;color:var(--ink-soft);font-size:14.8px}
+details .a p:last-child{margin-bottom:0}
+
+/* ===== footer ===== */
+footer.end{
+  margin-top:40px;padding:28px 0 50px;border-top:1px solid var(--line);
+  color:var(--ink-soft);font-size:14.5px;
+}
+footer.end b{color:var(--ink)}
+
+@media (max-width:600px){
+  nav.toc ol{columns:1}
+  .step{grid-template-columns:36px 1fr;padding:18px}
+  .step .num{width:36px;height:36px;font-size:15px;border-radius:10px}
+}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <span class="badge">✦ Hướng dẫn riêng cho chị Thi · youix.edu.vn</span>
+    <h1>Tự chuyển website sang host miễn phí</h1>
+    <p class="lede">Website của YouIX hiện tại chỉ là trang hiển thị thông tin + link ra ngoài (Youtube, Figma, Facebook), không có gì phức tạp phía sau — nên hoàn toàn có thể tự host miễn phí, không cần trả phí PA Vietnam mỗi tháng nữa. Tài liệu này hướng dẫn chị làm từng bước, không cần biết code.</p>
+    <div class="meta-row">
+      <span>⏱️ ~30–45 phút thao tác</span>
+      <span>🌐 Chờ tên miền cập nhật: vài giờ – 48 tiếng</span>
+      <span>💸 Chi phí: 0đ</span>
+    </div>
+    <nav class="toc">
+      <b>Các bước trong hướng dẫn</b>
+      <ol>
+        <li><a href="#chuan-bi">Chuẩn bị trước khi làm</a></li>
+        <li><a href="#buoc-1">Bước 1 — Tạo tài khoản Netlify</a></li>
+        <li><a href="#buoc-2">Bước 2 — Đưa website lên Netlify</a></li>
+        <li><a href="#buoc-3">Bước 3 — Kiểm tra link tạm</a></li>
+        <li><a href="#buoc-4">Bước 4 — Trỏ tên miền youix.edu.vn</a></li>
+        <li><a href="#buoc-5">Bước 5 — Chờ và kiểm tra lại</a></li>
+        <li><a href="#buoc-6">Bước 6 — Huỷ gói hosting cũ</a></li>
+        <li><a href="#faq">Câu hỏi thường gặp</a></li>
+      </ol>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section id="chuan-bi">
+    <h2>🧭 Chuẩn bị trước khi làm</h2>
+
+    <div class="callout warn">
+      <h3>⚠️ Đọc kỹ phần này trước — để không bị mất email</h3>
+      <p>Email <code>admin@youix.edu.vn</code> và website đang dùng chung một tên miền, nhưng có thể đang chạy trên <b>hai hệ thống khác nhau</b> — email chị nhắc là trước đây trỏ theo host (PA), sau đó có mua Google Workspace nhưng không chắc đã trỏ hẳn qua chưa.</p>
+      <p>Vì vậy, <b>trước khi đổi bất kỳ thứ gì</b>, mình cần biết chắc email hiện đang chạy ở đâu, để khi chuyển website thì <b>không đụng vào phần cấu hình email</b>. Làm theo 2 bước nhỏ sau:</p>
+      <ul>
+        <li>Vào <a href="https://mxtoolbox.com/MXLookup.aspx" target="_blank" rel="noopener">mxtoolbox.com/MXLookup.aspx</a>, gõ <code>youix.edu.vn</code> rồi bấm <b>MX Lookup</b>.</li>
+        <li>Nếu kết quả hiện ra các dòng có chữ <code>google.com</code> hoặc <code>googlemail.com</code> → email đang chạy qua Google, rất tốt, không liên quan gì tới hosting cả.</li>
+        <li>Nếu kết quả hiện tên khác (thường liên quan tới PA / tên host) → email đang chạy qua hosting hiện tại. Trường hợp này <b>chưa nên huỷ gói hosting cũ ngay</b> — nhắn lại cho mình để mình hướng dẫn chuyển email sang Google Workspace an toàn trước, rồi mới làm tiếp các bước dưới.</li>
+        <li>Chụp lại màn hình kết quả MX Lookup này để lưu — phòng khi cần đối chiếu sau.</li>
+      </ul>
+    </div>
+
+    <div class="prep">
+      <div class="prep-item"><span class="ck"></span> File website mình đã gửi kèm (1 file <code>index.html</code> duy nhất — bản thiết kế mới, đã giữ nguyên toàn bộ nội dung + link như site hiện tại).</div>
+      <div class="prep-item"><span class="ck"></span> 1 địa chỉ email để đăng ký tài khoản Netlify (dùng email nào cũng được, kể cả Gmail cá nhân).</div>
+      <div class="prep-item"><span class="ck"></span> Tài khoản đăng nhập vào nơi chị đang quản lý tên miền <code>youix.edu.vn</code> (thường là trang quản trị bên PA Vietnam, nơi chị mua domain + hosting).</div>
+    </div>
+  </section>
+
+  <section id="buoc-1">
+    <h2>Bước 1 — Tạo tài khoản Netlify (miễn phí)</h2>
+    <div class="step">
+      <div class="num">1</div>
+      <div>
+        <h3>Đăng ký tài khoản</h3>
+        <ol>
+          <li>Mở <a href="https://app.netlify.com/signup" target="_blank" rel="noopener">app.netlify.com/signup</a>.</li>
+          <li>Chọn đăng ký bằng email hoặc bằng Google — cách nào tiện thì chọn cách đó.</li>
+          <li>Xác nhận email nếu Netlify yêu cầu (kiểm tra hộp thư, kể cả mục Spam).</li>
+        </ol>
+        <div class="tip">💡 <span><b>Netlify</b> là dịch vụ host website tĩnh miễn phí, rất phổ biến, không cần biết code để dùng — chỉ cần kéo — thả file là xong.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="buoc-2">
+    <h2>Bước 2 — Đưa website lên Netlify</h2>
+    <div class="step">
+      <div class="num">2</div>
+      <div>
+        <h3>Tạo 1 thư mục chứa file website</h3>
+        <ol>
+          <li>Trên máy tính, tạo một thư mục (folder) mới, đặt tên gì cũng được, ví dụ <code>website-youix</code>.</li>
+          <li>Bỏ file <code>index.html</code> mình đã gửi vào trong thư mục đó (chỉ cần đúng 1 file này thôi).</li>
+        </ol>
+        <h3 style="margin-top:18px">Kéo — thả để đưa lên Netlify</h3>
+        <ol>
+          <li>Đăng nhập vào <a href="https://app.netlify.com" target="_blank" rel="noopener">app.netlify.com</a>.</li>
+          <li>Ở trang chính, bấm nút <b>Add new site</b> → chọn <b>Deploy manually</b>.</li>
+          <li>Kéo cả thư mục <code>website-youix</code> (kéo cả thư mục, không phải chỉ file) rồi thả vào ô Netlify hiện ra.</li>
+          <li>Đợi vài giây, Netlify sẽ báo <b>"Site deploy in progress"</b> rồi chuyển sang <b>"Published"</b>.</li>
+        </ol>
+        <div class="tip">💡 <span>Sau bước này, Netlify tự tạo cho chị một địa chỉ web tạm dạng <code>ten-ngau-nhien.netlify.app</code> — dùng để kiểm tra ở Bước 3, chưa phải link chính thức.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="buoc-3">
+    <h2>Bước 3 — Kiểm tra link tạm</h2>
+    <div class="step">
+      <div class="num">3</div>
+      <div>
+        <h3>Mở thử link Netlify vừa tạo</h3>
+        <ol>
+          <li>Trong trang quản trị site trên Netlify, bấm vào link màu xanh ở gần đầu trang (dạng <code>xyz123.netlify.app</code>).</li>
+          <li>Kiểm tra: trang có hiện đúng nội dung, các nút bấm menu (Trang chủ, Lộ trình học, Thành quả...) có chuyển trang được không, các link Facebook/Youtube/Figma có mở đúng không.</li>
+        </ol>
+        <p>Nếu mọi thứ ổn thì mới chuyển sang Bước 4. Nếu có gì sai khác, nhắn lại cho mình để mình chỉnh file rồi gửi lại chị làm lại Bước 2.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="buoc-4">
+    <h2>Bước 4 — Trỏ tên miền youix.edu.vn về Netlify</h2>
+    <div class="step">
+      <div class="num">4</div>
+      <div>
+        <h3>Thêm tên miền trong Netlify</h3>
+        <ol>
+          <li>Trong trang site trên Netlify → vào <b>Domain settings</b> (hoặc <b>Domain management</b>).</li>
+          <li>Bấm <b>Add a domain</b>, gõ <code>youix.edu.vn</code>, xác nhận.</li>
+          <li>Netlify sẽ hỏi có muốn dùng <b>Netlify DNS</b> không — <b>chọn "Không" / bỏ qua bước này</b>, chỉ cần thêm domain thôi. (Xem lưu ý quan trọng bên dưới.)</li>
+        </ol>
+
+        <div class="callout warn" style="margin-top:16px">
+          <h3>⚠️ Rất quan trọng</h3>
+          <p>Netlify có thể đề nghị chị chuyển toàn bộ DNS của tên miền sang cho Netlify quản lý (gọi là <b>"Netlify DNS"</b>). <b>Đừng làm cách này</b> — nếu làm vậy, mọi bản ghi DNS hiện tại (bao gồm cả bản ghi email <b>MX</b>) sẽ bị thay thế, dễ làm mất email đang dùng.</p>
+          <p>Chị chỉ cần thêm <b>đúng 1–2 bản ghi</b> bên dưới vào nơi chị đang quản lý DNS hiện tại (trang quản trị PA Vietnam), giữ nguyên mọi bản ghi khác — đặc biệt là MX.</p>
+        </div>
+
+        <h3 style="margin-top:18px">Thêm bản ghi DNS tại PA Vietnam</h3>
+        <ol>
+          <li>Đăng nhập vào trang quản trị domain tại PA Vietnam.</li>
+          <li>Tìm mục quản lý DNS / Bản ghi DNS (thường gọi là "Quản lý DNS", "DNS Zone" hoặc "DNS Management").</li>
+          <li>Thêm bản ghi mới theo đúng bảng dưới đây (Netlify sẽ hiện chính xác giá trị cần dùng ngay trên màn hình lúc chị thêm domain ở bước trên — <b>ưu tiên dùng giá trị Netlify hiển thị</b> nếu khác với bảng này):</li>
+        </ol>
+        <table class="dns-table">
+          <tr><th>Loại</th><th>Tên / Host</th><th>Giá trị</th></tr>
+          <tr><td>A</td><td><code>@</code> (hoặc để trống)</td><td><code>75.2.60.5</code></td></tr>
+          <tr><td>CNAME</td><td><code>www</code></td><td><code>[tên-site-cua-chi].netlify.app</code></td></tr>
+        </table>
+        <div class="tip">💡 <span>Chỉ thêm 2 dòng này. <b>Không xoá</b> bất kỳ bản ghi <code>MX</code>, <code>TXT</code> nào đang có sẵn — những bản ghi đó là của email.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="buoc-5">
+    <h2>Bước 5 — Chờ cập nhật và kiểm tra lại</h2>
+    <div class="step">
+      <div class="num">5</div>
+      <div>
+        <h3>Chờ DNS lan truyền</h3>
+        <p>Sau khi thêm bản ghi, hệ thống Internet cần thời gian để cập nhật — thường vài giờ, có thể tới 24–48 tiếng. Trong lúc chờ, website cũ vẫn hoạt động bình thường, không ai bị gián đoạn.</p>
+        <h3 style="margin-top:16px">Sau khi chờ xong, kiểm tra 2 việc</h3>
+        <ol>
+          <li>Mở trình duyệt, gõ <code>youix.edu.vn</code> → phải thấy website mới (bản Netlify).</li>
+          <li>Gửi thử 1 email tới <code>admin@youix.edu.vn</code> từ một tài khoản khác, kiểm tra vẫn nhận được bình thường như trước.</li>
+        </ol>
+        <p>Nếu 1 trong 2 việc trên chưa đúng — chưa vội làm gì thêm, nhắn lại cho mình kèm ảnh chụp màn hình để mình xem giúp.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="buoc-6">
+    <h2>Bước 6 — Huỷ gói hosting cũ (chỉ khi đã chắc chắn ổn)</h2>
+    <div class="step">
+      <div class="num">6</div>
+      <div>
+        <h3>Danh sách kiểm tra trước khi huỷ</h3>
+        <ul class="final-list">
+          <li>Website <code>youix.edu.vn</code> hiển thị đúng bản mới, thử trên cả điện thoại lẫn máy tính.</li>
+          <li>Đã gửi và nhận thử email tới <code>admin@youix.edu.vn</code> thành công.</li>
+          <li>Đã để website mới chạy ổn định ít nhất <b>3–5 ngày</b> không có vấn đề gì.</li>
+        </ul>
+        <p style="margin-top:14px">Khi cả 3 điều trên đều đúng, chị mới vào trang quản trị PA Vietnam để huỷ gói hosting trả phí (chỉ huỷ phần <b>hosting</b>, không đụng tới phần <b>tên miền / domain</b> — tên miền vẫn cần giữ lại vì website và email đều dùng chung tên miền đó).</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <h2>❓ Câu hỏi thường gặp</h2>
+
+    <details>
+      <summary>Sau này chị muốn sửa nội dung trên website thì làm sao?</summary>
+      <div class="a"><p>Vì đây là 1 file tĩnh (không còn WordPress), muốn sửa nội dung sẽ cần nhờ chỉnh lại file rồi lặp lại Bước 2 (kéo — thả file mới lên Netlify, chỉ mất 1 phút). Nếu chị cần tự sửa chữ/ảnh thường xuyên, nhắn lại để mình tư vấn thêm cách khác phù hợp hơn.</p></div>
+    </details>
+
+    <details>
+      <summary>Form liên hệ trên website cũ giờ sao rồi?</summary>
+      <div class="a"><p>Theo đúng như chị đã xác nhận là không cần nữa, bản thiết kế mới có ô Name / Email / Message nhưng chưa nối vào việc gửi email thật — chỉ hiển thị để đẹp giao diện. Nếu sau này cần dùng lại, nhắn mình nối vào dịch vụ gửi mail (cũng miễn phí).</p></div>
+    </details>
+
+    <details>
+      <summary>Nếu MX Lookup ở phần Chuẩn bị cho thấy email đang chạy qua PA thì sao?</summary>
+      <div class="a"><p>Thì <b>tạm dừng ở đó</b>, chưa làm các bước tiếp theo. Nhắn lại cho mình, mình sẽ hướng dẫn chuyển email sang Google Workspace (hoặc phương án email miễn phí khác) một cách an toàn trước, rồi mới quay lại làm Bước 4 để không bị gián đoạn email.</p></div>
+    </details>
+
+    <details>
+      <summary>Netlify miễn phí có giới hạn gì không?</summary>
+      <div class="a"><p>Gói miễn phí của Netlify (100GB băng thông/tháng) thoải mái dư cho một website hiển thị thông tin như YouIX, không cần lo về chi phí phát sinh.</p></div>
+    </details>
+
+    <details>
+      <summary>Lỡ làm sai ở bước nào đó thì có ảnh hưởng gì không?</summary>
+      <div class="a"><p>Không sao cả — trước khi DNS cập nhật xong (Bước 5), website cũ trên PA vẫn đang chạy bình thường, chưa ai bị ảnh hưởng. Cứ nhắn lại cho mình bất kỳ lúc nào nếu vướng.</p></div>
+    </details>
+  </section>
+
+</main>
+
+<footer class="end wrap">
+  <p><b>Tóm tắt:</b> kiểm tra email trước → đưa file lên Netlify → thử link tạm → trỏ tên miền (giữ nguyên MX) → chờ và kiểm tra lại → chạy ổn vài ngày mới huỷ gói cũ.</p>
+  <p>Có chỗ nào không chắc, cứ chụp màn hình nhắn lại qua Messenger nhé chị — không tính phí gì thêm cho việc này đâu ạ 🙌</p>
+</footer>
