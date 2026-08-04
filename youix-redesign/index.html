@@ -1,0 +1,931 @@
+<title>YouIX – Design & Technology Education (Redesign)</title>
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --paper:#F7F6FC;
+  --surface:#FFFFFF;
+  --surface-2:#EFEDF9;
+  --ink:#161240;
+  --ink-soft:#4A4670;
+  --ink-faint:#8A86AE;
+  --line:rgba(31,17,102,.14);
+  --indigo:#1F1166;
+  --violet:#6A68E2;
+  --violet-ink:#5350D6;
+  --lilac:#CC98F2;
+  --peach:#FFC7A4;
+  --sky:#8DE7FF;
+  --grad:linear-gradient(89deg,#CC98F2 0%,#FFC7A4 48%,#8DE7FF 100%);
+  --btn-ink:#FFFFFF;
+  --btn-bg:#1F1166;
+  --shadow:0 12px 40px -18px rgba(31,17,102,.35);
+  --logo-filter:none;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#0C0A20;
+    --surface:#161233;
+    --surface-2:#1E1941;
+    --ink:#EFEDFB;
+    --ink-soft:#B9B5DC;
+    --ink-faint:#7D79A8;
+    --line:rgba(207,200,255,.16);
+    --indigo:#2A1C86;
+    --violet:#8B89F2;
+    --violet-ink:#A5A3FF;
+    --btn-bg:#5D5AE6;
+    --shadow:0 12px 40px -18px rgba(0,0,0,.6);
+    --logo-filter:brightness(0) invert(1);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0C0A20;
+  --surface:#161233;
+  --surface-2:#1E1941;
+  --ink:#EFEDFB;
+  --ink-soft:#B9B5DC;
+  --ink-faint:#7D79A8;
+  --line:rgba(207,200,255,.16);
+  --indigo:#2A1C86;
+  --violet:#8B89F2;
+  --violet-ink:#A5A3FF;
+  --btn-bg:#5D5AE6;
+  --shadow:0 12px 40px -18px rgba(0,0,0,.6);
+  --logo-filter:brightness(0) invert(1);
+}
+:root[data-theme="light"]{
+  --paper:#F7F6FC;
+  --surface:#FFFFFF;
+  --surface-2:#EFEDF9;
+  --ink:#161240;
+  --ink-soft:#4A4670;
+  --ink-faint:#8A86AE;
+  --line:rgba(31,17,102,.14);
+  --indigo:#1F1166;
+  --violet:#6A68E2;
+  --violet-ink:#5350D6;
+  --btn-bg:#1F1166;
+  --shadow:0 12px 40px -18px rgba(31,17,102,.35);
+  --logo-filter:none;
+}
+
+/* ============ BASE ============ */
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Plus Jakarta Sans',ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  font-size:16px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{line-height:1.15;text-wrap:balance;margin:0 0 .5em;font-weight:800;letter-spacing:-.02em}
+p{margin:0 0 1em}
+a{color:var(--violet-ink);text-decoration:none}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--violet);outline-offset:2px;border-radius:6px}
+img{max-width:100%}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--violet-ink);margin-bottom:18px;
+}
+.eyebrow::before{content:"";width:26px;height:3px;border-radius:2px;background:var(--grad)}
+.grad-text{
+  background:var(--grad);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent;
+}
+.section{padding:88px 0}
+.section-tight{padding:56px 0}
+
+/* ============ BUTTONS ============ */
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:13px 26px;border-radius:999px;border:0;cursor:pointer;
+  background:var(--btn-bg);color:var(--btn-ink);
+  font:inherit;font-weight:700;font-size:15px;
+  transition:transform .18s ease,box-shadow .18s ease;
+  box-shadow:var(--shadow);
+}
+.btn:hover{transform:translateY(-2px)}
+.btn .arr{transition:transform .18s ease}
+.btn:hover .arr{transform:translateX(4px)}
+.btn-ghost{
+  background:transparent;color:var(--ink);
+  border:1.5px solid var(--line);box-shadow:none;
+}
+.btn-ghost:hover{border-color:var(--violet)}
+.btn-small{padding:9px 18px;font-size:14px}
+
+/* ============ HEADER ============ */
+header.site{
+  position:sticky;top:0;z-index:50;
+  background:color-mix(in srgb,var(--paper) 82%,transparent);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.nav{display:flex;align-items:center;gap:28px;height:72px}
+.nav .logo{display:flex;align-items:center;flex:0 0 auto}
+.nav .logo img{height:30px;width:auto;filter:var(--logo-filter)}
+.nav-links{display:flex;gap:6px;margin-left:auto;align-items:center;flex-wrap:wrap}
+.nav-links a.nl{
+  padding:8px 14px;border-radius:999px;color:var(--ink-soft);
+  font-weight:600;font-size:14.5px;
+}
+.nav-links a.nl:hover{color:var(--ink);background:var(--surface-2)}
+.nav-links a.nl.active{color:var(--ink);background:var(--surface-2);box-shadow:inset 0 0 0 1px var(--line)}
+.nav .btn{padding:10px 20px;font-size:14px}
+
+/* ============ HERO ============ */
+.hero{padding:84px 0 72px;position:relative;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.hero h1{font-size:clamp(34px,4.6vw,56px)}
+.hero .lede{font-size:18px;color:var(--ink-soft);max-width:34em}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}
+.hero-glow{
+  position:absolute;inset:auto -10% -60% -10%;height:70%;
+  background:radial-gradient(60% 100% at 30% 100%,rgba(204,152,242,.20),transparent 70%),
+             radial-gradient(50% 90% at 75% 100%,rgba(141,231,255,.18),transparent 70%);
+  pointer-events:none;
+}
+
+/* hero mock — a little design-tool scene */
+.mock{position:relative;min-height:400px}
+.mock-frame{
+  background:var(--surface);border:1px solid var(--line);border-radius:20px;
+  box-shadow:var(--shadow);overflow:hidden;
+}
+.mock-bar{display:flex;gap:6px;padding:12px 16px;border-bottom:1px solid var(--line)}
+.mock-bar i{width:10px;height:10px;border-radius:50%;background:var(--surface-2);display:block}
+.mock-bar i:nth-child(1){background:#CC98F2}
+.mock-bar i:nth-child(2){background:#FFC7A4}
+.mock-bar i:nth-child(3){background:#8DE7FF}
+.mock-body{display:grid;grid-template-columns:88px 1fr;min-height:330px}
+.mock-layers{border-right:1px solid var(--line);padding:14px 12px;display:flex;flex-direction:column;gap:10px}
+.mock-layers b{height:8px;border-radius:4px;background:var(--surface-2);display:block}
+.mock-layers b:nth-child(1){width:80%}
+.mock-layers b:nth-child(2){width:60%;background:var(--violet);opacity:.55}
+.mock-layers b:nth-child(3){width:70%}
+.mock-layers b:nth-child(4){width:50%}
+.mock-layers b:nth-child(5){width:65%}
+.mock-canvas{padding:22px;display:flex;align-items:center;justify-content:center;background:
+  linear-gradient(color-mix(in srgb,var(--line) 40%,transparent) 1px,transparent 1px),
+  linear-gradient(90deg,color-mix(in srgb,var(--line) 40%,transparent) 1px,transparent 1px);
+  background-size:26px 26px;
+}
+.mock-phone{
+  width:150px;border-radius:22px;border:1.5px solid var(--line);
+  background:var(--paper);padding:14px 12px;display:flex;flex-direction:column;gap:9px;
+}
+.mock-phone .ph-hero{height:64px;border-radius:12px;background:var(--grad);opacity:.9}
+.mock-phone b{height:7px;border-radius:4px;background:var(--surface-2);display:block}
+.mock-phone b:nth-child(3){width:70%}
+.mock-phone .ph-btn{height:24px;border-radius:999px;background:var(--btn-bg);margin-top:4px}
+.tag{
+  position:absolute;display:inline-flex;align-items:center;gap:7px;
+  padding:8px 14px;border-radius:999px;font-size:12.5px;font-weight:700;
+  background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);
+  color:var(--ink);
+}
+.tag::before{content:"";width:8px;height:8px;border-radius:2px;transform:rotate(45deg);background:var(--violet)}
+.tag.t1{top:8%;right:-4px}
+.tag.t2{bottom:20%;left:-14px}
+.tag.t2::before{background:#FFB27D}
+.tag.t3{bottom:-16px;right:12%}
+.tag.t3::before{background:#4FC7EB}
+
+/* ============ STATS ============ */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.stat{background:var(--surface);padding:26px 24px}
+.stat .num{font-size:30px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.stat .lbl{color:var(--ink-soft);font-size:13.5px;margin-top:2px}
+
+/* ============ CARDS (4 giá trị) ============ */
+.cards4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.vcard{
+  background:var(--surface);border:1px solid var(--line);border-radius:18px;
+  padding:26px 22px;display:flex;flex-direction:column;gap:14px;
+  transition:transform .2s ease,box-shadow .2s ease;
+}
+.vcard:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.vcard .ic{
+  width:44px;height:44px;border-radius:12px;display:grid;place-items:center;
+  font-size:20px;background:var(--surface-2);
+}
+.vcard h3{font-size:17px;margin:0}
+.vcard p{color:var(--ink-soft);font-size:14.5px;margin:0;flex:1}
+.vcard .cta{
+  display:inline-flex;align-items:center;gap:8px;align-self:flex-start;
+  padding:8px 16px;border-radius:999px;background:var(--btn-bg);color:var(--btn-ink);
+  font-size:13.5px;font-weight:700;
+}
+.vcard .cta:hover .arr{transform:translateX(3px)}
+.vcard .cta .arr{transition:transform .18s ease}
+
+/* ============ VIDEO ============ */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.video-card{
+  position:relative;display:block;border-radius:20px;overflow:hidden;
+  border:1px solid var(--line);box-shadow:var(--shadow);
+  aspect-ratio:16/9;
+  background:
+    radial-gradient(120% 140% at 15% 0%,rgba(204,152,242,.55),transparent 55%),
+    radial-gradient(120% 140% at 100% 20%,rgba(141,231,255,.5),transparent 55%),
+    radial-gradient(110% 130% at 60% 110%,rgba(255,199,164,.55),transparent 60%),
+    var(--indigo);
+}
+.video-card .vc-inner{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:22px 24px;color:#fff}
+.video-card .vc-top{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;opacity:.9}
+.video-card .play{
+  align-self:center;width:76px;height:76px;border-radius:50%;
+  background:rgba(255,255,255,.16);backdrop-filter:blur(6px);
+  display:grid;place-items:center;border:1.5px solid rgba(255,255,255,.5);
+  transition:transform .2s ease;
+}
+.video-card:hover .play{transform:scale(1.08)}
+.video-card .play svg{margin-left:5px}
+.video-card .vc-bottom{font-weight:700;font-size:16px;text-shadow:0 1px 8px rgba(0,0,0,.3)}
+
+/* ============ ROADMAP TEASER ============ */
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;counter-reset:step}
+.step{
+  background:var(--surface);border:1px solid var(--line);border-radius:16px;
+  padding:20px 18px;position:relative;
+}
+.step .k{font-size:11.5px;font-weight:800;letter-spacing:.12em;color:var(--violet-ink);text-transform:uppercase}
+.step h4{font-size:15px;margin:.4em 0 0}
+
+/* ============ FIGMA / FIELDS ============ */
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.chip{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:9px 16px;border-radius:999px;font-size:14px;font-weight:600;
+  background:var(--surface);border:1px solid var(--line);
+}
+.figma-card{
+  display:block;border-radius:20px;border:1px solid var(--line);
+  background:var(--surface);box-shadow:var(--shadow);overflow:hidden;
+  transition:transform .2s ease;
+}
+.figma-card:hover{transform:translateY(-4px)}
+.figma-card .fc-art{
+  aspect-ratio:16/9;position:relative;
+  background:
+    radial-gradient(90% 120% at 85% 10%,rgba(141,231,255,.4),transparent 55%),
+    radial-gradient(90% 120% at 10% 90%,rgba(204,152,242,.4),transparent 55%),
+    var(--surface-2);
+  display:grid;place-items:center;
+}
+.fc-shapes{display:flex;gap:14px;align-items:center}
+.fc-shapes span{display:block;width:44px;height:44px}
+.fc-shapes .s1{border-radius:50% 50% 0 50%;background:#CC98F2}
+.fc-shapes .s2{border-radius:10px;background:#FFC7A4;transform:rotate(12deg)}
+.fc-shapes .s3{border-radius:50%;background:#8DE7FF}
+.fc-shapes .s4{width:0;height:0;border-left:22px solid transparent;border-right:22px solid transparent;border-bottom:40px solid var(--violet);opacity:.85}
+.figma-card .fc-body{padding:20px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.figma-card .fc-body b{font-size:16px;color:var(--ink)}
+.figma-card .fc-body span{color:var(--ink-soft);font-size:13.5px;display:block;font-weight:400}
+.figma-card .fc-go{
+  flex:0 0 auto;width:40px;height:40px;border-radius:50%;
+  background:var(--btn-bg);color:#fff;display:grid;place-items:center;font-weight:700;
+}
+
+/* ============ CTA BAND ============ */
+.listen{
+  border-radius:24px;border:1px solid var(--line);
+  background:
+    radial-gradient(80% 140% at 90% 0%,rgba(141,231,255,.16),transparent 60%),
+    radial-gradient(80% 140% at 5% 100%,rgba(204,152,242,.18),transparent 60%),
+    var(--surface);
+  padding:56px 48px;text-align:center;
+}
+.listen h2{font-size:clamp(24px,3vw,34px)}
+.listen p{max-width:44em;margin:0 auto 26px;color:var(--ink-soft)}
+
+/* ============ PAGE HERO (subpages) ============ */
+.page-hero{padding:72px 0 40px}
+.page-hero h1{font-size:clamp(30px,4vw,46px)}
+.page-hero .lede{font-size:17.5px;color:var(--ink-soft);max-width:44em}
+
+/* ============ COURSES (process) ============ */
+.course-list{display:flex;flex-direction:column;gap:0;position:relative;margin-top:8px}
+.course{
+  display:grid;grid-template-columns:120px 1fr;gap:28px;
+  padding:34px 0;border-top:1px solid var(--line);
+}
+.course:last-child{border-bottom:1px solid var(--line)}
+.course .cnum{
+  font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--violet-ink);
+  padding-top:4px;
+}
+.course .cnum b{display:block;font-size:34px;letter-spacing:-.02em;color:var(--ink);font-variant-numeric:tabular-nums}
+.course h3{font-size:20px;margin-bottom:.35em}
+.course p{color:var(--ink-soft);margin:0;max-width:56em}
+.course .meta{display:inline-flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.course .meta i{
+  font-style:normal;font-size:12.5px;font-weight:700;
+  padding:5px 12px;border-radius:999px;background:var(--surface-2);color:var(--ink-soft);
+}
+.commit{
+  margin-top:40px;border-radius:20px;padding:32px 36px;
+  background:var(--indigo);color:#fff;
+  display:flex;gap:20px;align-items:center;flex-wrap:wrap;justify-content:space-between;
+}
+.commit h3{margin:0 0 4px;font-size:19px;color:#fff}
+.commit p{margin:0;color:rgba(255,255,255,.8);max-width:40em}
+.commit .btn{background:#fff;color:var(--indigo);box-shadow:none}
+
+/* ============ GALLERY (result / portfolio) ============ */
+.gal{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.gal-tile{
+  border-radius:16px;border:1px solid var(--line);overflow:hidden;background:var(--surface);
+  transition:transform .2s ease,box-shadow .2s ease;
+}
+.gal-tile:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.gal-art{
+  aspect-ratio:4/3;display:grid;place-items:center;position:relative;background:var(--surface-2);
+}
+.gal-art .badge{
+  position:absolute;top:12px;left:12px;
+  font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+  padding:5px 10px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--ink-soft);
+}
+.gal-art .emoji{font-size:38px}
+.gal-cap{padding:14px 18px;font-size:14px;font-weight:600}
+.gal-cap span{display:block;font-weight:400;color:var(--ink-soft);font-size:12.5px}
+.g1{background:radial-gradient(100% 130% at 20% 10%,rgba(204,152,242,.4),transparent 60%),var(--surface-2)}
+.g2{background:radial-gradient(100% 130% at 80% 10%,rgba(255,199,164,.45),transparent 60%),var(--surface-2)}
+.g3{background:radial-gradient(100% 130% at 50% 100%,rgba(141,231,255,.45),transparent 60%),var(--surface-2)}
+.note-src{color:var(--ink-faint);font-size:13px;margin-top:18px}
+
+/* portfolio device mock tiles */
+.pf-shot{display:flex;gap:10px;align-items:flex-end;padding:18px}
+.pf-shot .scr{border-radius:10px;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;gap:6px;padding:10px}
+.pf-shot .scr b{height:6px;border-radius:3px;background:var(--surface-2);display:block}
+.pf-shot .scr .hero-b{height:34px;border-radius:8px;background:var(--grad);opacity:.85}
+.pf-shot .s-lg{flex:1.4;height:130px}
+.pf-shot .s-sm{flex:1;height:100px}
+
+/* ============ TEACHER ============ */
+.teacher-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:start}
+.avatar-card{
+  border-radius:24px;border:1px solid var(--line);background:var(--surface);
+  padding:40px;text-align:center;box-shadow:var(--shadow);
+}
+.avatar-ring{
+  width:150px;height:150px;margin:0 auto 20px;border-radius:50%;
+  padding:5px;background:var(--grad);
+}
+.avatar-ring .mono{
+  width:100%;height:100%;border-radius:50%;background:var(--indigo);
+  display:grid;place-items:center;color:#fff;font-size:44px;font-weight:800;letter-spacing:-.03em;
+}
+.avatar-card h3{margin-bottom:2px}
+.avatar-card .role{color:var(--ink-soft);font-size:14px}
+.exp-list{display:flex;flex-direction:column;gap:18px}
+.exp{
+  display:grid;grid-template-columns:44px 1fr;gap:16px;
+  background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;
+}
+.exp .ic{width:44px;height:44px;border-radius:12px;background:var(--surface-2);display:grid;place-items:center;font-size:20px}
+.exp p{margin:0;color:var(--ink-soft);font-size:15px}
+.exp b{color:var(--ink)}
+
+/* ============ CONTACT ============ */
+.contact-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:start}
+.form-card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:36px;box-shadow:var(--shadow)}
+.field{margin-bottom:20px}
+.field label{display:block;font-size:13.5px;font-weight:700;margin-bottom:8px}
+.field input,.field textarea{
+  width:100%;padding:13px 16px;border-radius:12px;border:1.5px solid var(--line);
+  background:var(--paper);color:var(--ink);font:inherit;font-size:15px;
+}
+.field input::placeholder,.field textarea::placeholder{color:var(--ink-faint)}
+.field input:focus,.field textarea:focus{border-color:var(--violet);outline:none}
+.field textarea{min-height:140px;resize:vertical}
+.info-card{display:flex;flex-direction:column;gap:14px}
+.info-row{
+  display:grid;grid-template-columns:42px 1fr;gap:14px;align-items:start;
+  background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px;
+}
+.info-row .ic{width:42px;height:42px;border-radius:11px;background:var(--surface-2);display:grid;place-items:center;font-size:18px}
+.info-row b{display:block;font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-faint)}
+.info-row span{font-size:15px;font-weight:600;overflow-wrap:anywhere}
+
+/* toast */
+.toast{
+  position:fixed;left:50%;bottom:30px;transform:translate(-50%,20px);
+  background:var(--indigo);color:#fff;padding:14px 24px;border-radius:999px;
+  font-weight:600;font-size:14.5px;opacity:0;pointer-events:none;
+  transition:opacity .25s ease,transform .25s ease;z-index:100;box-shadow:var(--shadow);
+  max-width:90vw;text-align:center;
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* ============ FOOTER ============ */
+footer.site{margin-top:96px;border-top:1px solid var(--line);background:var(--surface)}
+.foot-cta{padding:72px 0 56px;text-align:center;border-bottom:1px solid var(--line)}
+.foot-cta h2{font-size:clamp(28px,4vw,44px);margin-bottom:6px}
+.foot-cta .kae{
+  font-size:13px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);
+}
+.socials{display:flex;justify-content:center;gap:14px;margin-top:30px}
+.socials a{
+  width:46px;height:46px;border-radius:50%;display:grid;place-items:center;
+  background:var(--surface-2);border:1px solid var(--line);color:var(--ink);
+  transition:transform .18s ease,background .18s ease;
+}
+.socials a:hover{transform:translateY(-3px);background:var(--btn-bg);color:#fff}
+.socials svg{width:20px;height:20px;fill:currentColor}
+.foot-info{padding:36px 0 44px;text-align:center;color:var(--ink-soft);font-size:13.5px}
+.foot-info .co{font-weight:800;color:var(--ink);letter-spacing:.02em;font-size:14px;margin-bottom:8px}
+.foot-info p{margin:0 0 4px}
+.foot-info img{height:26px;filter:var(--logo-filter);margin-bottom:16px;opacity:.9}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){
+  *{transition:none !important;animation:none !important}
+  .rv{opacity:1;transform:none}
+  html{scroll-behavior:auto}
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:960px){
+  .hero-grid,.split,.teacher-grid,.contact-grid{grid-template-columns:1fr;gap:40px}
+  .cards4{grid-template-columns:repeat(2,1fr)}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .steps{grid-template-columns:repeat(2,1fr)}
+  .gal{grid-template-columns:repeat(2,1fr)}
+  .mock{min-height:0}
+  .nav-links a.nl{display:none}
+  .nav-links a.nl.active{display:inline-block}
+}
+@media (max-width:600px){
+  .cards4,.stats,.steps,.gal{grid-template-columns:1fr}
+  .course{grid-template-columns:1fr;gap:8px}
+  .section{padding:60px 0}
+  .listen{padding:40px 24px}
+}
+</style>
+
+<!-- ================= HEADER ================= -->
+<header class="site">
+  <div class="wrap nav">
+    <a class="logo" href="#/" aria-label="YouIX – Trang chủ">
+      <img alt="YouIX" src="data:image/png;base64,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" />
+    </a>
+    <nav class="nav-links" aria-label="Điều hướng chính">
+      <a class="nl" data-route="home" href="#/">Trang chủ</a>
+      <a class="nl" data-route="process" href="#/process">Lộ trình học</a>
+      <a class="nl" data-route="result" href="#/result">Thành quả</a>
+      <a class="nl" data-route="teacher" href="#/teacher">Giảng viên</a>
+      <a class="nl" data-route="contact" href="#/contact">Liên hệ</a>
+      <a class="btn" data-route="porfolio" href="#/porfolio"><span class="arr">→</span> Portfolio</a>
+    </nav>
+  </div>
+</header>
+
+<main id="app">
+
+<!-- ================= HOME ================= -->
+<section data-page="home">
+  <div class="hero">
+    <div class="hero-glow"></div>
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">Design &amp; Technology Education · TP. Hồ Chí Minh</span>
+        <h1>Trung tâm đào tạo <span class="grad-text">thiết kế</span> và <span class="grad-text">lập trình</span></h1>
+        <p class="lede"><strong>Youix</strong> định hướng trở thành nơi giảng dạy và đào tạo hàng đầu về thiết kế và lập trình tại Tp HCM.</p>
+        <div class="hero-cta">
+          <a class="btn" href="https://www.facebook.com/youixeducation" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-7.6h2.57l.38-2.97H13.5V8.53c0-.86.24-1.44 1.47-1.44h1.58V4.43c-.27-.04-1.2-.12-2.29-.12-2.27 0-3.82 1.38-3.82 3.92v2.2H7.87v2.97h2.57V21h3.06Z"/></svg>
+            Về Youix Fanpage
+          </a>
+          <a class="btn btn-ghost" href="#/process">Xem lộ trình học <span class="arr">→</span></a>
+        </div>
+      </div>
+      <div class="mock rv">
+        <div class="mock-frame">
+          <div class="mock-bar"><i></i><i></i><i></i></div>
+          <div class="mock-body">
+            <div class="mock-layers"><b></b><b></b><b></b><b></b><b></b></div>
+            <div class="mock-canvas">
+              <div class="mock-phone">
+                <div class="ph-hero"></div>
+                <b></b><b></b>
+                <div class="ph-btn"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <span class="tag t1">Mentor review</span>
+        <span class="tag t2">UI Kit · Components</span>
+        <span class="tag t3">Prototype</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap section-tight rv">
+    <div class="stats">
+      <div class="stat"><div class="num">+7</div><div class="lbl">năm hành trình đào tạo</div></div>
+      <div class="stat"><div class="num">18</div><div class="lbl">khoá học đã giảng dạy</div></div>
+      <div class="stat"><div class="num">5</div><div class="lbl">khoá trong lộ trình học</div></div>
+      <div class="stat"><div class="num grad-text">Ui Ux Trainer</div><div class="lbl">tiền thân của YouIX</div></div>
+    </div>
+  </div>
+
+  <div class="wrap section">
+    <span class="eyebrow">Vì sao chọn YouIX</span>
+    <h2 style="font-size:clamp(26px,3.4vw,38px);max-width:16em">Bốn lý do học viên tin tưởng</h2>
+    <div class="cards4" style="margin-top:34px">
+      <div class="vcard rv">
+        <div class="ic">🧭</div>
+        <h3>Hành trình +7 năm</h3>
+        <p>Tiền thân "Ui Ux Trainer" — hành trình +7 năm với 18 khoá học đã đào tạo.</p>
+        <a class="cta" href="#/teacher">Về Founder <span class="arr">→</span></a>
+      </div>
+      <div class="vcard rv">
+        <div class="ic">📚</div>
+        <h3>Kiến thức tiên tiến</h3>
+        <p>Giáo trình cập nhật liên tục theo nhu cầu tuyển dụng của thị trường.</p>
+        <a class="cta" href="#/process">Lộ trình học <span class="arr">→</span></a>
+      </div>
+      <div class="vcard rv">
+        <div class="ic">🏆</div>
+        <h3>Quan tâm kết quả</h3>
+        <p>Theo sát và quan tâm kết quả của học viên sau mỗi khoá học.</p>
+        <a class="cta" href="#/result">Thành quả 💯 <span class="arr">→</span></a>
+      </div>
+      <div class="vcard rv">
+        <div class="ic">🎯</div>
+        <h3>Định hướng sớm</h3>
+        <p>Giảng dạy trọng tâm và định hướng nghề nghiệp sớm cho từng học viên.</p>
+        <a class="cta" href="https://www.facebook.com/youixeducation" target="_blank" rel="noopener">Giá trị cốt lõi <span class="arr">→</span></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap section">
+    <div class="split">
+      <div class="rv">
+        <span class="eyebrow">Học liệu miễn phí</span>
+        <h2 style="font-size:clamp(26px,3.4vw,38px)">Nâng tầm <span class="grad-text">toolset, skillset,</span> và <span class="grad-text">mindset</span></h2>
+        <p style="color:var(--ink-soft);max-width:36em">Chuỗi bài giảng của YouIX trên Youtube giúp bạn làm quen với tư duy thiết kế, công cụ và quy trình làm việc thực tế — hoàn toàn miễn phí trước khi bước vào lộ trình chính thức.</p>
+        <a class="btn btn-small" href="https://www.youtube.com/watch?v=P6gi91CWli8&amp;list=PLw9nSbVrrPt-j_ihKbmX-9St6tDN8jByB" target="_blank" rel="noopener">Xem playlist trên Youtube <span class="arr">→</span></a>
+      </div>
+      <a class="video-card rv" href="https://www.youtube.com/watch?v=P6gi91CWli8&amp;list=PLw9nSbVrrPt-j_ihKbmX-9St6tDN8jByB" target="_blank" rel="noopener" aria-label="Mở playlist bài giảng YouIX trên Youtube">
+        <span class="vc-inner">
+          <span class="vc-top"><span>Youtube · Playlist</span><span>YouIX Class</span></span>
+          <span class="play" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="#fff"><path d="M8 5.5v13l11-6.5-11-6.5Z"/></svg>
+          </span>
+          <span class="vc-bottom">Bài giảng mở đầu — Level up your design mindset</span>
+        </span>
+      </a>
+    </div>
+  </div>
+
+  <div class="wrap section">
+    <span class="eyebrow">Lộ trình học lý tưởng</span>
+    <h2 style="font-size:clamp(26px,3.4vw,38px)">#Level-up to Professional<br /><span class="grad-text">#Ability #Knowledge</span></h2>
+    <div class="steps" style="margin-top:34px">
+      <a class="step rv" href="#/process"><span class="k">Khoá 1</span><h4>UI/UX Cơ Bản</h4></a>
+      <a class="step rv" href="#/process"><span class="k">Khoá 2</span><h4>UI/UX Nâng Cao</h4></a>
+      <a class="step rv" href="#/process"><span class="k">Khoá 3</span><h4>UI Global Style</h4></a>
+      <a class="step rv" href="#/process"><span class="k">Khoá 4</span><h4>UX Components</h4></a>
+      <a class="step rv" href="#/process"><span class="k">Khoá 5</span><h4>UX Research</h4></a>
+    </div>
+  </div>
+
+  <div class="wrap section">
+    <div class="split">
+      <div class="rv">
+        <span class="eyebrow">Kinh nghiệm thực chiến</span>
+        <h2 style="font-size:clamp(26px,3.4vw,38px)">Kinh nghiệm tư vấn và đào tạo các lĩnh vực</h2>
+        <div class="chips">
+          <span class="chip">🧳 SaaS Enterprise</span>
+          <span class="chip">🧬 E-Commerce</span>
+          <span class="chip">🤖 AI</span>
+          <span class="chip">👥 HR Tech</span>
+          <span class="chip">🏦 Fintech &amp; Banking</span>
+          <span class="chip">⚽ Sport Tech</span>
+        </div>
+      </div>
+      <a class="figma-card rv" href="https://www.figma.com/community/file/1179926555046335436" target="_blank" rel="noopener" aria-label="Mở tài nguyên của YouIX trên Figma Community">
+        <span class="fc-art">
+          <span class="fc-shapes"><span class="s1"></span><span class="s2"></span><span class="s3"></span><span class="s4"></span></span>
+        </span>
+        <span class="fc-body">
+          <b>Tài nguyên trên Figma Community<span>Mở file thiết kế mẫu của YouIX — miễn phí cho học viên và cộng đồng</span></b>
+          <span class="fc-go" aria-hidden="true">↗</span>
+        </span>
+      </a>
+    </div>
+  </div>
+
+  <div class="wrap section-tight">
+    <div class="listen rv">
+      <h2>Mong muốn lắng nghe từ các bạn</h2>
+      <p>Youix luôn cố gắng xây dựng một môi trường đào tạo cởi mở. Chúng tôi không ngừng cải thiện chất lượng giảng dạy để đáp ứng các tiêu chuẩn thị trường tốt nhất.</p>
+      <a class="btn" href="#/contact">Đóng góp ý kiến <span class="arr">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROCESS ================= -->
+<section data-page="process" hidden>
+  <div class="wrap page-hero">
+    <span class="eyebrow">Lộ trình học</span>
+    <h1>Từ cơ bản đến <span class="grad-text">chuyên sâu</span>, trong 5 khoá học</h1>
+    <p class="lede">Với lộ trình học được thiết kế độc quyền tại YouIX, học viên sẽ được trang bị từ những kiến thức từ cơ bản đến chuyên sâu.</p>
+    <p class="lede">Sau khi hoàn thành 5 khoá học, YouIX cam kết hỗ trợ học viên tìm kiếm việc làm, giúp học viên đạt được mức lương đáng mơ ước và nhiều cơ hội thăng tiến trong công việc.</p>
+  </div>
+  <div class="wrap section-tight">
+    <span class="eyebrow">Tổng quan khoá học</span>
+    <div class="course-list">
+      <article class="course rv">
+        <div class="cnum">Khoá<b>01</b></div>
+        <div>
+          <h3>UI/UX Cơ Bản</h3>
+          <p>Khoá học này bao gồm 10 buổi. Sau khoá học, học viên sẽ hiểu được các khái niệm cơ bản về thiết kế website, giao diện và trải nghiệm người dùng. Học viên sẽ được thực hành thiết kế website thực tế dưới sự hướng dẫn và góp ý từ giảng viên.</p>
+          <span class="meta"><i>10 buổi</i><i>Website</i><i>Thực hành có mentor</i></span>
+        </div>
+      </article>
+      <article class="course rv">
+        <div class="cnum">Khoá<b>02</b></div>
+        <div>
+          <h3>UI/UX Nâng Cao</h3>
+          <p>Khoá học UI/UX Nâng cao cung cấp những kiến thức và kỹ năng để thiết kế giao diện và trải nghiệm người dùng App thông qua: nghiên cứu đối thủ, kỹ thuật iOS/Android và sử dụng app components… Những kiến thức trong giáo trình là những kiến thức thực tế nhất để học viên áp dụng được ngay.</p>
+          <span class="meta"><i>Mobile App</i><i>iOS / Android</i><i>App Components</i></span>
+        </div>
+      </article>
+      <article class="course rv">
+        <div class="cnum">Khoá<b>03</b></div>
+        <div>
+          <h3>UI Global Style</h3>
+          <p>Mục tiêu của khoá học này giúp học viên có được tư duy thiết kế hiện đại, tập trung vào nội dung. Nhờ đó, sản phẩm thiết kế sẽ tạo cảm hứng cho người dùng, tăng thời gian trải nghiệm sản phẩm và tăng tỷ lệ chuyển đổi.</p>
+          <span class="meta"><i>Tư duy hiện đại</i><i>Content-first</i><i>Conversion</i></span>
+        </div>
+      </article>
+      <article class="course rv">
+        <div class="cnum">Khoá<b>04</b></div>
+        <div>
+          <h3>UX Components</h3>
+          <p>Mục tiêu khoá học giúp học viên hiểu rõ nguyên tắc sử dụng các Components, cũng như bản chất và cơ chế hoạt động của từng Components.</p>
+          <span class="meta"><i>Design System</i><i>Nguyên tắc sử dụng</i><i>Cơ chế hoạt động</i></span>
+        </div>
+      </article>
+      <article class="course rv">
+        <div class="cnum">Khoá<b>05</b></div>
+        <div>
+          <h3>UX Research</h3>
+          <p>Với khoá học này, học viên sẽ học được các quy tắc thiết kế lấy người dùng làm trung tâm, hiểu về thói quen và tâm lý người dùng trên các nền tảng. Học viên được trang bị kỹ năng thuyết trình để trình bày thông tin quan trọng và giá trị của nghiên cứu.</p>
+          <span class="meta"><i>User-centered</i><i>Tâm lý người dùng</i><i>Kỹ năng thuyết trình</i></span>
+        </div>
+      </article>
+    </div>
+    <div class="commit rv">
+      <div>
+        <h3>Cam kết đồng hành sau khoá học</h3>
+        <p>Hoàn thành đủ 5 khoá, YouIX hỗ trợ bạn tìm kiếm việc làm và định hướng lộ trình thăng tiến.</p>
+      </div>
+      <a class="btn" href="#/contact">Nhận tư vấn lộ trình <span class="arr">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RESULT ================= -->
+<section data-page="result" hidden>
+  <div class="wrap page-hero">
+    <span class="eyebrow">Thành quả</span>
+    <h1>Thành quả của các học viên đến từ <span class="grad-text">YouIX</span></h1>
+    <p class="lede">Với nỗ lực của học viên và giảng viên thì kết quả này là hoàn toàn xứng đáng. Thành công của học viên đã gắn liền với tên tuổi và thành tựu của Youix.</p>
+  </div>
+  <div class="wrap section-tight">
+    <div class="gal">
+      <div class="gal-tile rv"><div class="gal-art g1"><span class="badge">Offer</span><span class="emoji">🎉</span></div><div class="gal-cap">Học viên nhận offer UI/UX Designer<span>Chia sẻ kết quả sau khoá học</span></div></div>
+      <div class="gal-tile rv"><div class="gal-art g2"><span class="badge">Job</span><span class="emoji">💼</span></div><div class="gal-cap">Chuyển ngành thành công<span>Từ trái ngành sang Product Design</span></div></div>
+      <div class="gal-tile rv"><div class="gal-art g3"><span class="badge">Level up</span><span class="emoji">📈</span></div><div class="gal-cap">Tăng lương sau tốt nghiệp<span>Đạt mức thu nhập mơ ước</span></div></div>
+      <div class="gal-tile rv"><div class="gal-art g3"><span class="badge">Offer</span><span class="emoji">🥳</span></div><div class="gal-cap">Nhận việc ngay khi học Khoá 4<span>Doanh nghiệp tuyển thẳng từ lớp</span></div></div>
+      <div class="gal-tile rv"><div class="gal-art g1"><span class="badge">Review</span><span class="emoji">💬</span></div><div class="gal-cap">Phản hồi từ học viên<span>Cảm nhận sau từng khoá học</span></div></div>
+      <div class="gal-tile rv"><div class="gal-art g2"><span class="badge">Team</span><span class="emoji">🤝</span></div><div class="gal-cap">Gia nhập team sản phẩm<span>SaaS · E-commerce · Fintech</span></div></div>
+    </div>
+    <p class="note-src">* Hình ảnh kết quả thực tế của học viên được cập nhật liên tục tại website youix.edu.vn và fanpage của YouIX.</p>
+  </div>
+</section>
+
+<!-- ================= TEACHER ================= -->
+<section data-page="teacher" hidden>
+  <div class="wrap page-hero">
+    <span class="eyebrow">Giảng viên</span>
+    <h1>Người dẫn đường của <span class="grad-text">YouIX</span></h1>
+    <p class="lede">Kinh nghiệm thực chiến tại các công ty đa quốc gia, kết hợp cùng 7 năm giảng dạy — nền tảng để YouIX xây dựng giáo trình sát với thị trường tuyển dụng.</p>
+  </div>
+  <div class="wrap section-tight">
+    <div class="teacher-grid">
+      <div class="avatar-card rv">
+        <div class="avatar-ring"><div class="mono">IX</div></div>
+        <h3>Founder YouIX</h3>
+        <p class="role">UI/UX Trainer &amp; Specialist · 7+ năm giảng dạy</p>
+        <div class="chips" style="justify-content:center">
+          <span class="chip">Gameloft VN</span>
+          <span class="chip">Pyco Group</span>
+          <span class="chip">Riverorchid North</span>
+          <span class="chip">KMS</span>
+        </div>
+        <div style="margin-top:24px">
+          <a class="btn btn-small" href="https://www.facebook.com/youixeducation" target="_blank" rel="noopener">Kết nối qua Fanpage <span class="arr">→</span></a>
+        </div>
+      </div>
+      <div class="exp-list">
+        <div class="exp rv">
+          <div class="ic">🌏</div>
+          <p><b>Kinh nghiệm đa quốc gia.</b> Nhiều năm làm việc tại các công ty đa quốc gia như: Gameloft VN, Pyco Group, Riverorchid North, KMS, …</p>
+        </div>
+        <div class="exp rv">
+          <div class="ic">🏗️</div>
+          <p><b>Sản phẩm Enterprise.</b> Kinh nghiệm xây dựng UI UX cho 2 hệ thống về HRM Enterprise SaaS Solutions.</p>
+        </div>
+        <div class="exp rv">
+          <div class="ic">🎓</div>
+          <p><b>7 năm giảng dạy.</b> Khởi nguồn là UI/UX Trainer &amp; Specialist tại công ty Gameloft Việt Nam, thành lập và đào tạo tại UIUX TRAINER cùng thời điểm đó — tiền thân của Youix.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PORTFOLIO ================= -->
+<section data-page="porfolio" hidden>
+  <div class="wrap page-hero">
+    <span class="eyebrow">Portfolio học viên</span>
+    <h1>Sản phẩm thật, từ <span class="grad-text">học viên thật</span></h1>
+    <p class="lede">Mỗi học viên tốt nghiệp với một bài cuối khoá hoàn chỉnh — từ nghiên cứu, wireframe đến giao diện hoàn thiện.</p>
+  </div>
+  <div class="wrap section-tight">
+    <div class="gal">
+      <div class="gal-tile rv">
+        <div class="gal-art g1">
+          <span class="badge">Final Project</span>
+          <div class="pf-shot"><div class="scr s-lg"><div class="hero-b"></div><b></b><b style="width:70%"></b></div><div class="scr s-sm"><b></b><b style="width:60%"></b><b></b></div></div>
+        </div>
+        <div class="gal-cap">Bài cuối khoá — Duy Đặng<span>Học viên K13</span></div>
+      </div>
+      <div class="gal-tile rv">
+        <div class="gal-art g2">
+          <span class="badge">Final Project</span>
+          <div class="pf-shot"><div class="scr s-sm"><b></b><b style="width:60%"></b><b></b></div><div class="scr s-lg"><div class="hero-b"></div><b></b><b style="width:70%"></b></div></div>
+        </div>
+        <div class="gal-cap">Bài cuối khoá — Hân Hồ<span>Học viên K18</span></div>
+      </div>
+      <div class="gal-tile rv">
+        <div class="gal-art g3">
+          <span class="badge">Final Project</span>
+          <div class="pf-shot"><div class="scr s-lg"><div class="hero-b"></div><b></b><b style="width:70%"></b></div><div class="scr s-sm"><b></b><b style="width:60%"></b><b></b></div></div>
+        </div>
+        <div class="gal-cap">Bài cuối khoá — Võ Trần An Hạ<span>Học viên K19</span></div>
+      </div>
+    </div>
+
+    <div style="margin-top:64px">
+      <span class="eyebrow">Thư viện bài tập</span>
+      <h2 style="font-size:clamp(22px,3vw,30px)">Tổng hợp hình ảnh bài thực hành của các học viên</h2>
+      <div class="gal" style="margin-top:26px">
+        <div class="gal-tile rv"><div class="gal-art g2"><span class="badge">Practice</span><span class="emoji">📱</span></div><div class="gal-cap">Thiết kế Mobile App<span>Bài thực hành Khoá 2</span></div></div>
+        <div class="gal-tile rv"><div class="gal-art g3"><span class="badge">Practice</span><span class="emoji">🖥️</span></div><div class="gal-cap">Thiết kế Website<span>Bài thực hành Khoá 1</span></div></div>
+        <div class="gal-tile rv"><div class="gal-art g1"><span class="badge">Practice</span><span class="emoji">🧩</span></div><div class="gal-cap">Design System &amp; Components<span>Bài thực hành Khoá 4</span></div></div>
+      </div>
+      <p class="note-src">* Toàn bộ hình ảnh bài làm gốc của học viên được lưu trữ và cập nhật tại youix.edu.vn/porfolio.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section data-page="contact" hidden>
+  <div class="wrap page-hero">
+    <span class="eyebrow">Liên hệ</span>
+    <h1>Liên hệ với <span class="grad-text">YouIX</span></h1>
+    <p class="lede">Bạn cần tư vấn lộ trình học, hợp tác đào tạo hay muốn đóng góp ý kiến? Gửi tin nhắn cho chúng tôi — YouIX sẽ phản hồi sớm nhất.</p>
+  </div>
+  <div class="wrap section-tight">
+    <div class="contact-grid">
+      <form class="form-card rv" id="contact-form">
+        <div class="field">
+          <label for="f-name">Name</label>
+          <input id="f-name" type="text" name="name" placeholder="Họ và tên của bạn" autocomplete="name" />
+        </div>
+        <div class="field">
+          <label for="f-email">Email</label>
+          <input id="f-email" type="email" name="email" placeholder="ban@email.com" autocomplete="email" />
+        </div>
+        <div class="field">
+          <label for="f-msg">Message</label>
+          <textarea id="f-msg" name="message" placeholder="Bạn muốn YouIX hỗ trợ điều gì?"></textarea>
+        </div>
+        <button class="btn" type="submit">Gửi thông tin <span class="arr">→</span></button>
+      </form>
+      <div class="info-card">
+        <div class="info-row rv"><div class="ic">✉️</div><div><b>Email</b><span>admin@youix.edu.vn</span></div></div>
+        <div class="info-row rv"><div class="ic">📞</div><div><b>Điện thoại</b><span>0985 040 230</span></div></div>
+        <div class="info-row rv"><div class="ic">📍</div><div><b>Văn phòng</b><span>1G Nguyễn Duy, Phường 3, Quận Bình Thạnh, TP.HCM</span></div></div>
+        <div class="info-row rv"><div class="ic">🧾</div><div><b>Mã số thuế</b><span>0317506807-001</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="site">
+  <div class="wrap foot-cta">
+    <h2>Level up your skillset. <span class="grad-text">Join class!</span></h2>
+    <div class="kae">Knowledge · Ability · Experience</div>
+    <div class="socials">
+      <a href="https://www.facebook.com/youixeducation" target="_blank" rel="noopener" aria-label="Facebook YouIX">
+        <svg viewBox="0 0 24 24"><path d="M13.5 21v-7.6h2.57l.38-2.97H13.5V8.53c0-.86.24-1.44 1.47-1.44h1.58V4.43c-.27-.04-1.2-.12-2.29-.12-2.27 0-3.82 1.38-3.82 3.92v2.2H7.87v2.97h2.57V21h3.06Z"/></svg>
+      </a>
+      <a href="https://www.youtube.com/channel/UCax_-MWjo5Kj80oqvQk7P6Q" target="_blank" rel="noopener" aria-label="Youtube YouIX">
+        <svg viewBox="0 0 24 24"><path d="M21.6 7.2a2.5 2.5 0 0 0-1.76-1.77C18.28 5 12 5 12 5s-6.28 0-7.84.43A2.5 2.5 0 0 0 2.4 7.2 26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.76 1.77C5.72 19 12 19 12 19s6.28 0 7.84-.43a2.5 2.5 0 0 0 1.76-1.77A26 26 0 0 0 22 12a26 26 0 0 0-.4-4.8ZM10 15.2V8.8l5.2 3.2-5.2 3.2Z"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/in/youix-education-a14489259/" target="_blank" rel="noopener" aria-label="Linkedin YouIX">
+        <svg viewBox="0 0 24 24"><path d="M6.94 8.5v12H3.56v-12h3.38ZM7.13 5.25a1.88 1.88 0 1 1-1.88-1.87 1.87 1.87 0 0 1 1.88 1.87ZM20.5 13.72v6.78h-3.37v-6.14c0-1.55-.55-2.6-1.94-2.6a2.1 2.1 0 0 0-1.96 1.4 2.63 2.63 0 0 0-.13.93v6.41H9.72v-12h3.38v1.63a3.35 3.35 0 0 1 3.04-1.68c2.22 0 3.86 1.45 3.86 4.27Z"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="wrap foot-info">
+    <p class="co">TRUNG TÂM ĐÀO TẠO YOUIX – CHI NHÁNH CÔNG TY TNHH ĐÀO TẠO CÔNG NGHỆ YOUIX</p>
+    <p>Tên quốc tế: YOUIX TRAINING CENTER – BRANCH OF YOUIX TRAINING TECHNOLOGY COMPANY LIMITED</p>
+    <p>Tên viết tắt: YOUIX · Mã số thuế: 0317506807-001</p>
+    <p>Văn phòng: 1G Nguyễn Duy, Phường 3, Quận Bình Thạnh, TP.HCM</p>
+    <p>Đóng góp ý kiến: <a href="mailto:admin@youix.edu.vn">admin@youix.edu.vn</a> – <a href="tel:0985040230">0985 040 230</a></p>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  var pages = document.querySelectorAll('[data-page]');
+  var navLinks = document.querySelectorAll('[data-route]');
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var io = null;
+  if ('IntersectionObserver' in window && !reduced) {
+    io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, {threshold: .12});
+  }
+
+  function observeReveals(root){
+    root.querySelectorAll('.rv').forEach(function(el){
+      if (io) { el.classList.remove('in'); io.observe(el); }
+      else { el.classList.add('in'); }
+    });
+  }
+
+  function route(){
+    var hash = location.hash.replace(/^#\/?/, '').replace(/\/$/, '') || 'home';
+    var found = false;
+    pages.forEach(function(p){
+      var match = p.getAttribute('data-page') === hash;
+      p.hidden = !match;
+      if (match) found = true;
+    });
+    if (!found) {
+      pages.forEach(function(p){ p.hidden = p.getAttribute('data-page') !== 'home'; });
+      hash = 'home';
+    }
+    navLinks.forEach(function(a){
+      a.classList.toggle('active', a.getAttribute('data-route') === hash);
+    });
+    window.scrollTo(0,0);
+    pages.forEach(function(p){ if (!p.hidden) observeReveals(p); });
+  }
+
+  window.addEventListener('hashchange', route);
+  route();
+
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  function showToast(msg){
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toast.classList.remove('show'); }, 3800);
+  }
+
+  document.getElementById('contact-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    showToast('Bản demo giao diện — tính năng gửi email sẽ được kết nối sau. Cảm ơn bạn!');
+    this.reset();
+  });
+})();
+</script>
