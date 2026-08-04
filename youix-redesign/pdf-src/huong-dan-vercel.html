@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<title>Hướng dẫn deploy website youix.edu.vn lên Vercel</title>
+<style>
+@page{
+  size: A4;
+  margin: 20mm 16mm 20mm 16mm;
+  @bottom-center{
+    content: "youix.edu.vn — hướng dẫn deploy lên Vercel · trang " counter(page) " / " counter(pages);
+    font-size: 8.5px; color: #8B8474; font-family: -apple-system, "Segoe UI", Arial, sans-serif;
+  }
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 10.8px;
+  line-height: 1.55;
+  color: #16181A;
+  background: #ffffff;
+}
+h1,h2,h3{line-height:1.25;margin:0 0 .4em;font-weight:800;letter-spacing:-.01em;color:#101315}
+p{margin:0 0 .8em}
+code{
+  background:#EEF0EC;padding:.1em .38em;border-radius:4px;font-size:.93em;
+  font-family: "Liberation Mono", "DejaVu Sans Mono", monospace; color:#12312A;
+}
+a{color:#0A5847}
+ul,ol{margin:.4em 0 .8em;padding-left:19px}
+li{margin-bottom:5px}
+
+/* ===== cover ===== */
+.cover{
+  min-height: 233mm;
+  display:flex;flex-direction:column;justify-content:center;
+  page-break-after: always;
+}
+.cover .kicker{
+  display:inline-flex;align-self:flex-start;align-items:center;gap:7px;
+  font-size:11px;font-weight:700;letter-spacing:.08em;color:#0A5847;
+  background:#E1F1EB;padding:6px 14px;border-radius:999px;margin-bottom:22px;
+}
+.cover h1{font-size:32px;max-width:15em}
+.cover .sub{font-size:14px;color:#4B534E;max-width:34em;margin-top:10px}
+.cover .meta{margin-top:34px;display:flex;flex-direction:column;gap:8px;font-size:11.5px;color:#5C564A}
+.cover .meta b{color:#16181A}
+.cover .foot{margin-top:auto;font-size:10px;color:#9AA39B;border-top:1px solid #E4E7E1;padding-top:14px}
+
+/* ===== section ===== */
+section{page-break-inside: avoid; margin-bottom: 16px}
+.section-break{page-break-before: always}
+h2{
+  font-size:15.5px;padding-bottom:7px;border-bottom:2px solid #101315;margin-bottom:12px;
+  display:flex;align-items:center;gap:8px;
+}
+h2 .tag{
+  font-size:9.5px;font-weight:800;letter-spacing:.07em;color:#fff;background:#0C6E58;
+  padding:3px 8px;border-radius:5px;
+}
+h3{font-size:12.3px;margin-top:14px;color:#0A5847}
+
+/* ===== callouts ===== */
+.box{
+  border-radius:9px;padding:12px 15px;margin:10px 0 14px;border:1px solid #E4E7E1;
+  page-break-inside: avoid;
+}
+.box.warn{background:#FBEEE1;border-color:#E9C79E}
+.box.warn h3{color:#9A4A0A;margin:0 0 5px;font-size:11.5px}
+.box.tip{background:#E1F1EB;border-color:#B9DDCD}
+.box.tip h3{color:#0A5847;margin:0 0 5px;font-size:11.2px}
+.box p:last-child, .box ul:last-child, .box ol:last-child{margin-bottom:0}
+
+/* ===== two-path cards ===== */
+.paths{display:flex;gap:14px;margin:12px 0 18px}
+.path{
+  flex:1;border:1.4px solid #101315;border-radius:11px;padding:14px 15px;
+}
+.path.a{background:#101512;color:#DCEAE3}
+.path.a h3{color:#7DE0BB;margin-top:0}
+.path.b{background:#fff}
+.path.b h3{margin-top:0;color:#101315}
+.path p{font-size:10.3px;color:inherit;opacity:.92}
+
+/* ===== prompt block ===== */
+.prompt{
+  background:#101512;color:#DCEAE3;border-radius:10px;padding:14px 16px;
+  font-family:"Liberation Mono","DejaVu Sans Mono",monospace;font-size:9.6px;line-height:1.6;
+  white-space:pre-wrap;margin:8px 0 12px;
+}
+.prompt .lbl{
+  font-family:-apple-system,Arial,sans-serif;font-size:9px;font-weight:700;letter-spacing:.08em;
+  color:#7DE0BB;text-transform:uppercase;margin-bottom:8px;display:block;
+}
+
+/* ===== steps ===== */
+.step{
+  display:flex;gap:11px;margin-bottom:11px;page-break-inside:avoid;
+}
+.step .num{
+  flex:0 0 auto;width:22px;height:22px;border-radius:6px;background:#0C6E58;color:#fff;
+  font-weight:800;font-size:11px;display:flex;align-items:center;justify-content:center;
+}
+.step .body{flex:1}
+.step .body p, .step .body ol, .step .body ul{font-size:10.4px;color:#3A4A3F;margin:2px 0 0}
+
+/* ===== dns table ===== */
+table.dns{width:100%;border-collapse:collapse;margin:8px 0 12px;font-size:10px}
+table.dns th{
+  background:#101512;color:#DCEAE3;text-align:left;padding:7px 10px;font-size:8.8px;
+  text-transform:uppercase;letter-spacing:.05em;
+}
+table.dns td{padding:7px 10px;border-bottom:1px solid #E4E7E1}
+table.dns tr:nth-child(even) td{background:#F5F6F4}
+
+/* ===== checklist ===== */
+.checklist{list-style:none;margin:8px 0 0;padding:0}
+.checklist li{
+  display:flex;gap:8px;font-size:10.4px;color:#3A4A3F;margin-bottom:6px;align-items:flex-start;
+}
+.checklist li::before{content:"☐";flex:0 0 auto;color:#0C6E58;font-size:12px;line-height:1.3}
+
+/* ===== faq ===== */
+.faq-item{margin-bottom:9px}
+.faq-item .q{font-weight:700;font-size:10.8px;color:#101315;margin-bottom:2px}
+.faq-item .q::before{content:"Q. ";color:#0C6E58}
+.faq-item .a{font-size:10.2px;color:#4B534E}
+.faq-item .a::before{content:"A. ";color:#9AA39B;font-weight:700}
+
+footer.doc-end{margin-top:20px;padding-top:12px;border-top:1px solid #E4E7E1;font-size:9.6px;color:#5C564A}
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<div class="cover">
+  <span class="kicker">✦ Tài liệu riêng cho chị Thi · youix.edu.vn</span>
+  <h1>Deploy website youix.edu.vn lên Vercel</h1>
+  <p class="sub">Hướng dẫn chuyển website sang host miễn phí trên Vercel — có 2 cách: nhờ Claude làm giúp (nếu chị có dùng Claude), hoặc tự làm thủ công từng bước trên trình duyệt, không cần biết code.</p>
+  <div class="meta">
+    <div><b>Thời gian:</b> ~20–40 phút thao tác, cộng thời gian chờ tên miền cập nhật (vài giờ – 48 tiếng)</div>
+    <div><b>Chi phí:</b> 0 đồng</div>
+    <div><b>Cần chuẩn bị:</b> file <code>index.html</code> đính kèm, quyền quản trị DNS domain (PA Vietnam)</div>
+  </div>
+  <div class="foot">Soạn cho youix.edu.vn — 04/08/2026</div>
+</div>
+
+<!-- ============ 0. CHUẨN BỊ ============ -->
+<section>
+  <h2><span class="tag">0</span> Chuẩn bị trước khi làm</h2>
+
+  <div class="box warn">
+    <h3>⚠️ Đọc trước — để không mất email admin@youix.edu.vn</h3>
+    <p>Website và email đang dùng chung tên miền <code>youix.edu.vn</code> nhưng có thể chạy trên hai hệ thống khác nhau. Trước khi đổi bất cứ thứ gì, hãy kiểm tra email đang chạy qua đâu:</p>
+    <ol>
+      <li>Vào <code>mxtoolbox.com/MXLookup.aspx</code>, gõ <code>youix.edu.vn</code>, bấm <b>MX Lookup</b>.</li>
+      <li>Thấy <code>google.com</code>/<code>googlemail.com</code> → email đang qua Google, không liên quan hosting, an toàn để làm tiếp.</li>
+      <li>Thấy tên khác (liên quan PA) → email đang chạy qua hosting hiện tại — <b>dừng lại</b>, không làm Bước 4 (trỏ domain) cho tới khi email được chuyển an toàn sang nơi khác trước.</li>
+    </ol>
+  </div>
+
+  <ul class="checklist">
+    <li>File website đính kèm (<code>index.html</code> — 1 file duy nhất, không cần cài đặt gì thêm).</li>
+    <li>Một email bất kỳ để đăng ký tài khoản GitHub và Vercel (dùng Gmail cá nhân cũng được).</li>
+    <li>Tài khoản đăng nhập vào nơi quản trị domain <code>youix.edu.vn</code> hiện tại (thường là trang PA Vietnam).</li>
+  </ul>
+</section>
+
+<!-- ============ CHỌN CÁCH LÀM ============ -->
+<section>
+  <h2><span class="tag">?</span> Chọn cách làm phù hợp với chị</h2>
+  <div class="paths">
+    <div class="path a">
+      <h3>Cách 1 — Nếu chị có dùng Claude</h3>
+      <p>Copy prompt ở trang sau, dán vào Claude (Claude Code, Claude.ai hoặc Cowork) kèm file <code>index.html</code>. Claude sẽ tự làm giúp (nếu đã kết nối Vercel) hoặc hướng dẫn chị từng cú click ngay trong cuộc trò chuyện.</p>
+    </div>
+    <div class="path b">
+      <h3>Cách 2 — Tự làm thủ công</h3>
+      <p>Không cần Claude, không cần biết code — chỉ cần trình duyệt, làm theo 8 bước ở phần sau của tài liệu này (GitHub → Vercel → trỏ domain).</p>
+    </div>
+  </div>
+  <p style="font-size:10px;color:#8B8474">Hai cách ra cùng một kết quả — chọn cách nào chị thấy thoải mái hơn. Có thể thử Cách 1 trước, nếu vướng thì quay sang Cách 2.</p>
+</section>
+
+<!-- ============ CÁCH 1: PROMPT CHO CLAUDE ============ -->
+<div class="section-break"></div>
+<section>
+  <h2><span class="tag">1</span> Cách 1 — Nhờ Claude làm giúp</h2>
+  <p>Mở Claude (Claude Code, Claude.ai, hoặc Cowork), đính kèm/upload file <code>index.html</code> mình gửi kèm, sau đó copy toàn bộ đoạn dưới đây rồi dán vào khung chat và gửi:</p>
+
+  <div class="prompt"><span class="lbl">Prompt — copy toàn bộ đoạn bên dưới</span>Mình cần deploy một website tĩnh (chỉ có 1 file index.html, không cần build, không cần framework) lên Vercel, dưới tài khoản Vercel của mình.
+
+Yêu cầu:
+1. Nếu bạn có công cụ/kết nối để deploy trực tiếp lên Vercel, hãy tạo project mới tên "youix" và deploy file index.html mình đính kèm lên môi trường production giúp mình.
+2. Sau khi deploy xong, hướng dẫn mình cách thêm tên miền youix.edu.vn vào đúng project đó trong Vercel, và cho mình biết chính xác bản ghi DNS (A record hoặc CNAME) cần thêm vào nơi mình đang quản lý domain (PA Vietnam).
+3. LƯU Ý QUAN TRỌNG: mình đang dùng chung tên miền này cho cả email (admin@youix.edu.vn), nên chỉ thêm đúng bản ghi cần cho website thôi — tuyệt đối không hướng dẫn mình xoá hay đổi bản ghi MX, và không dùng cách "chuyển toàn bộ DNS/nameserver sang Vercel quản lý".
+4. Nếu bạn không có quyền/công cụ để deploy trực tiếp giúp mình, hãy hướng dẫn mình từng bước thật chi tiết, dễ hiểu, để mình tự làm trên trình duyệt (mình không biết code).
+
+File website mình đính kèm ở đây, hoặc dán nội dung nếu cần: [đính kèm file index.html]</div>
+
+  <div class="box tip">
+    <h3>💡 Mẹo</h3>
+    <p>Nếu Claude có thể tự deploy được, cuối cùng chị sẽ có 1 đường link dạng <code>youix-xxx.vercel.app</code> để kiểm tra, và Claude sẽ cho chị biết chính xác bản ghi DNS cần thêm ở PA Vietnam. Chị vẫn cần tự đăng nhập vào PA Vietnam để dán bản ghi đó vào — không ai làm thay được bước này vì cần tài khoản của chị.</p>
+  </div>
+</section>
+
+<!-- ============ CÁCH 2: THỦ CÔNG ============ -->
+<div class="section-break"></div>
+<section>
+  <h2><span class="tag">2</span> Cách 2 — Tự làm thủ công (không cần Claude)</h2>
+  <p>Vercel không có kiểu "kéo — thả" trực tiếp như một số dịch vụ khác, nên cách đơn giản nhất không cần dùng dòng lệnh là: đưa file lên GitHub (kéo thả trên trình duyệt), rồi để Vercel lấy từ GitHub về.</p>
+
+  <h3>Bước 1 — Tạo tài khoản GitHub</h3>
+  <div class="step"><div class="num">1</div><div class="body">
+    <ol>
+      <li>Vào <code>github.com/signup</code>, đăng ký bằng email.</li>
+      <li>Xác nhận email nếu được yêu cầu.</li>
+    </ol>
+  </div></div>
+
+  <h3>Bước 2 — Tạo kho chứa (repository) và tải file lên</h3>
+  <div class="step"><div class="num">2</div><div class="body">
+    <ol>
+      <li>Sau khi đăng nhập, bấm dấu <b>+</b> ở góc trên bên phải → <b>New repository</b>.</li>
+      <li>Đặt tên, ví dụ <code>youix-website</code> → chọn <b>Public</b> → bấm <b>Create repository</b>.</li>
+      <li>Ở trang repository vừa tạo, bấm <b>Add file</b> → <b>Upload files</b>.</li>
+      <li>Kéo file <code>index.html</code> vào ô upload, rồi bấm <b>Commit changes</b> ở cuối trang.</li>
+    </ol>
+  </div></div>
+
+  <h3>Bước 3 — Tạo tài khoản Vercel và deploy</h3>
+  <div class="step"><div class="num">3</div><div class="body">
+    <ol>
+      <li>Vào <code>vercel.com/signup</code>, chọn <b>Continue with GitHub</b> để đăng nhập bằng tài khoản GitHub vừa tạo.</li>
+      <li>Ở trang chính Vercel, bấm <b>Add New...</b> → <b>Project</b>.</li>
+      <li>Tìm và chọn repository <code>youix-website</code> vừa tạo → bấm <b>Import</b>.</li>
+      <li>Để nguyên các thiết lập mặc định (Vercel tự nhận diện đây là site tĩnh) → bấm <b>Deploy</b>.</li>
+      <li>Đợi khoảng 30 giây, Vercel báo thành công và cho một link dạng <code>youix-website.vercel.app</code>.</li>
+    </ol>
+  </div></div>
+
+  <h3>Bước 4 — Kiểm tra link tạm</h3>
+  <div class="step"><div class="num">4</div><div class="body">
+    <p>Mở link Vercel vừa nhận được, kiểm tra: trang hiện đúng nội dung, các mục menu chuyển được, link Facebook/Youtube/Figma mở đúng. Ổn thì làm tiếp Bước 5.</p>
+  </div></div>
+
+  <h3>Bước 5 — Trỏ tên miền youix.edu.vn về Vercel</h3>
+  <div class="step"><div class="num">5</div><div class="body">
+    <ol>
+      <li>Trong project trên Vercel, vào tab <b>Settings</b> → <b>Domains</b>.</li>
+      <li>Gõ <code>youix.edu.vn</code> → bấm <b>Add</b>.</li>
+      <li>Vercel sẽ hiện bản ghi DNS cần thêm — thường là các dòng như bảng dưới (luôn ưu tiên giá trị Vercel hiển thị trên màn hình nếu khác bảng này):</li>
+    </ol>
+    <table class="dns">
+      <tr><th>Loại</th><th>Tên / Host</th><th>Giá trị</th></tr>
+      <tr><td>A</td><td><code>@</code> (để trống)</td><td><code>76.76.21.21</code></td></tr>
+      <tr><td>CNAME</td><td><code>www</code></td><td><code>cname.vercel-dns.com</code></td></tr>
+    </table>
+  </div></div>
+
+  <div class="box warn">
+    <h3>⚠️ Rất quan trọng</h3>
+    <p>Chỉ thêm đúng 2 bản ghi trên vào trang quản trị DNS ở PA Vietnam. <b>Không xoá, không đổi</b> bất kỳ bản ghi <code>MX</code> hay <code>TXT</code> nào đang có — đó là cấu hình email. Cũng không chọn phương án "chuyển nameserver sang Vercel quản lý toàn bộ".</p>
+  </div>
+
+  <h3>Bước 6 — Chờ DNS cập nhật</h3>
+  <div class="step"><div class="num">6</div><div class="body">
+    <p>Việc cập nhật DNS cần thời gian, thường vài giờ, có thể tới 24–48 tiếng. Trong lúc chờ, website cũ trên PA vẫn chạy bình thường, không ai bị gián đoạn.</p>
+  </div></div>
+
+  <h3>Bước 7 — Kiểm tra lại cả web lẫn email</h3>
+  <div class="step"><div class="num">7</div><div class="body">
+    <ol>
+      <li>Gõ <code>youix.edu.vn</code> trên trình duyệt → phải thấy website mới.</li>
+      <li>Gửi thử 1 email tới <code>admin@youix.edu.vn</code> từ tài khoản khác → kiểm tra vẫn nhận được như trước.</li>
+    </ol>
+  </div></div>
+
+  <h3>Bước 8 — Huỷ gói hosting cũ (chỉ khi đã chắc chắn ổn)</h3>
+  <div class="step"><div class="num">8</div><div class="body">
+    <ul class="checklist">
+      <li>Website hiển thị đúng bản mới, thử trên cả điện thoại và máy tính.</li>
+      <li>Email vào/ra bình thường như trước.</li>
+      <li>Đã chạy ổn định ít nhất 3–5 ngày không có vấn đề gì.</li>
+    </ul>
+    <p style="margin-top:6px">Đủ cả 3 điều trên mới vào PA Vietnam huỷ gói <b>hosting</b> trả phí — không huỷ phần <b>tên miền/domain</b>, vì cả website lẫn email vẫn cần domain đó.</p>
+  </div></div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<div class="section-break"></div>
+<section>
+  <h2><span class="tag">?</span> Câu hỏi thường gặp</h2>
+
+  <div class="faq-item">
+    <div class="q">Sau này muốn sửa nội dung website thì sao?</div>
+    <div class="a">Vì đây là 1 file tĩnh, muốn sửa cần thay file <code>index.html</code> mới rồi lặp lại "Upload files" ở Bước 2 (GitHub tự cập nhật, Vercel tự deploy lại) — hoặc nhờ Claude làm theo Cách 1. Nếu cần tự sửa chữ/ảnh thường xuyên, nhắn lại để được tư vấn thêm.</div>
+  </div>
+  <div class="faq-item">
+    <div class="q">Vercel miễn phí có giới hạn gì không?</div>
+    <div class="a">Gói Hobby (miễn phí) của Vercel thoải mái dư cho một website hiển thị thông tin như YouIX, không phát sinh chi phí.</div>
+  </div>
+  <div class="faq-item">
+    <div class="q">MX Lookup cho thấy email đang chạy qua PA thì sao?</div>
+    <div class="a">Tạm dừng, chưa làm Bước 5 (trỏ domain). Nhắn lại để được hướng dẫn chuyển email sang nơi khác an toàn trước, rồi mới quay lại trỏ domain.</div>
+  </div>
+  <div class="faq-item">
+    <div class="q">Lỡ làm sai ở bước nào thì có ảnh hưởng gì không?</div>
+    <div class="a">Không sao — trước khi DNS cập nhật xong (Bước 6), website cũ trên PA vẫn đang chạy bình thường. Cứ nhắn lại bất kỳ lúc nào nếu vướng.</div>
+  </div>
+
+  <footer class="doc-end">
+    <p><b>Tóm tắt nhanh:</b> kiểm tra MX trước → GitHub upload file → Vercel import & deploy → kiểm tra link tạm → thêm domain trong Vercel + dán DNS ở PA (giữ nguyên MX) → chờ & kiểm tra lại → ổn định vài ngày mới huỷ gói cũ.</p>
+    <p>Có chỗ nào không chắc, cứ nhắn lại qua Messenger — không tính phí gì thêm cho việc này 🙌</p>
+  </footer>
+</section>
+
+</body>
+</html>
